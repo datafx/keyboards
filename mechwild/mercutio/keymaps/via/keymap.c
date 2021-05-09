@@ -14,8 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
-
 #include QMK_KEYBOARD_H
+#include <stdio.h>
+#include <print.h>
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_all(
@@ -84,41 +85,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         oled_set_cursor(0,0);
         oled_write_P(PSTR("Keyboard Status"), false);
     }
+
     void oled_task_user(void) {
         render_screen();
-        oled_set_cursor(0,2);
-        switch(selected_layer){
-            case 0:
-                oled_write_P(PSTR("Lock Layer 0"), false);
-                break;
-            case 1:
-                oled_write_P(PSTR("Lock Layer 1"), false);
-                break;
-            case 2:
-                oled_write_P(PSTR("Lock Layer 2"), false);
-                break;
-            case 3:
-                oled_write_P(PSTR("Lock Layer 3"), false);
-                break;
-            default:
-                oled_write_P(PSTR("Lock Layer ?"), false);    // Should never display, here as a catchall
-        }
         oled_set_cursor(0,3);
             switch (get_highest_layer(layer_state)) {
                 case 0:
-                    oled_write_P(PSTR("Temp Layer 0"), false);
+                    oled_write_P(PSTR("Active Layer 0"), false);
                     break;
                 case 1:
-                    oled_write_P(PSTR("Temp Layer 1"), false);
+                    oled_write_P(PSTR("Active Layer 1"), false);
                     break;
                 case 2:
-                    oled_write_P(PSTR("Temp Layer 2"), false);
+                    oled_write_P(PSTR("Active Layer 2"), false);
                     break;
                 case 3:
-                    oled_write_P(PSTR("Temp Layer 3"), false);
+                    oled_write_P(PSTR("Active Layer 3"), false);
                     break;
                 default:
-                    oled_write_P(PSTR("Temp Layer ?"), false);    // Should never display, here as a catchall                
+                    oled_write_P(PSTR("Active` Layer ?"), false);    // Should never display, here as a catchall                
         }
         led_t led_state = host_keyboard_led_state();
         oled_set_cursor(16,3);
@@ -127,5 +112,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         oled_write_P(led_state.num_lock ? PSTR("NLCK ") : PSTR("    "), false);
         oled_set_cursor(16,1);
         oled_write_P(led_state.caps_lock ? PSTR("CAPS ") : PSTR("    "), false);
+
+        int current_wpm = 0;
+        char wpm_str[8];
+        current_wpm = get_current_wpm();
+        oled_set_cursor(0,2);
+        sprintf(wpm_str, "%03d", current_wpm);
+        oled_write(wpm_str, false);
+        oled_set_cursor(3,2);
+        oled_write(" WPM", false);
+
     }
+
 #endif
