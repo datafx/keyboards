@@ -85,9 +85,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         oled_set_cursor(0,0);
         oled_write_P(PSTR("Keyboard Status"), false);
     }
-
     void oled_task_user(void) {
         render_screen();
+        // Display highest layer on OLED as active layer
         oled_set_cursor(0,3);
             switch (get_highest_layer(layer_state)) {
                 case 0:
@@ -103,16 +103,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     oled_write_P(PSTR("Active Layer 3"), false);
                     break;
                 default:
-                    oled_write_P(PSTR("Active` Layer ?"), false);    // Should never display, here as a catchall                
+                    oled_write_P(PSTR("Active Layer ?"), false);    // Should never display, here as a catchall                
         }
+        // Display mode on OLED based on magic MAGIC_TOGGLE_ALT_GUI
         oled_set_cursor(0,1);
             if (keymap_config.swap_ralt_rgui) {
               oled_write_P(PSTR("MacOS Mode  "), false);
             } else {
               oled_write_P(PSTR("Windows Mode"), false);
             }
-
-
+        // Dispplay caps/num/scroll lock on OLED
         led_t led_state = host_keyboard_led_state();
         oled_set_cursor(16,3);
         oled_write_P(led_state.scroll_lock ? PSTR("SCLK") : PSTR("    "), false);
@@ -120,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         oled_write_P(led_state.num_lock ? PSTR("NLCK ") : PSTR("    "), false);
         oled_set_cursor(16,1);
         oled_write_P(led_state.caps_lock ? PSTR("CAPS ") : PSTR("    "), false);
-
+        // Display WPM counter on OLED
         int current_wpm = 0;
         char wpm_str[8];
         current_wpm = get_current_wpm();
@@ -129,7 +129,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         oled_write(wpm_str, false);
         oled_set_cursor(3,2);
         oled_write(" WPM", false);
-
     }
 
 #endif
