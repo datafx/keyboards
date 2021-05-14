@@ -62,29 +62,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef ENCODER_ENABLE       // Encoder Functionality. Does not work with VIAL encoder enabled.
     uint8_t selected_layer = 0;
     void encoder_update_user(uint8_t index, bool clockwise) {
-        #ifdef OLED_DRIVER_ENABLE
-            oled_clear();
-            oled_render();
-        #endif
         switch (index) {
-            case 0:         // This is the only encoder right now, keeping for consistency
+            case 0:         // The only encoder
                 if ( clockwise ) {
-                    if ( selected_layer  < 3 && keyboard_report->mods & MOD_BIT(KC_LCTL) ) { // If you are holding L control, encoder changes layers
-                        selected_layer ++;
-                        layer_move(selected_layer);
-                    } else {
-                        tap_code(KC_VOLU);                                                   // Otherwise it just changes volume
-                    }
-                } else if ( !clockwise ) {
-                    if ( selected_layer  > 0 && keyboard_report->mods & MOD_BIT(KC_LCTL) ){
-                        selected_layer --;
-                        layer_move(selected_layer);
-                    } else {
-                        tap_code(KC_VOLD);
-                    }
+                    switch (get_highest_layer(layer_state)) {
+                        case 0:
+                           tap_code(KC_VOLU);
+                           break;
+                        case 1:
+                            tap_code(KC_BRIU); 
+                            break;
+                        case 2:
+                            register_code16(S(G(KC_Z)));
+                            clear_keyboard();
+                            break;
+                        }
+                } 
+                else if ( !clockwise ) {
+                    switch (get_highest_layer(layer_state)) {
+                        case 0:
+                            tap_code(KC_VOLD);
+                            break;
+                        case 1:
+                            tap_code(KC_BRID); 
+                            break;
+                        case 2:
+                            register_code16(G(KC_Z));
+                            clear_keyboard();
+                            break;
+                        }
                 }
         }
     }
+
 #endif
 
 #ifdef OLED_DRIVER_ENABLE   // OLED Functionality
