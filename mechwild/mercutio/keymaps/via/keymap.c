@@ -33,8 +33,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_all(
                                                                                                                   KC_MUTE,
         TD(TD_TAB_ESC),   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-        KC_CAPS,          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_QUOT, KC_ENT,
-        KC_LSFT, KC_SLSH, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,           MO(3),
+        MO(3),            KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_QUOT, KC_ENT,
+        KC_LSFT, KC_SLSH, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,           KC_RSFT,
         KC_LCTL, KC_LGUI, KC_LALT,          MO(1),   MO(2),            KC_SPC,           KC_RALT, KC_RGUI,          KC_RCTL ),
 
   [1] = LAYOUT_all(
@@ -104,34 +104,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     bool clear_screen = false;          // used to manage singular screen clears to prevent display glitch
     static void render_screen(void) {     // Render screen
         oled_set_cursor(0,0);
-        oled_write_P(PSTR("Keyboard Status"), false);
+        oled_write_P(PSTR("Mercutio Status"), false);
     }
     void oled_task_user(void) {
         render_screen();
         // Display highest layer on OLED as active layer
         oled_set_cursor(0,3);
+            oled_write_P(PSTR("Layer "), false);
             switch (get_highest_layer(layer_state)) {
                 case 0:
-                    oled_write_P(PSTR("Active Layer 0"), false);
+                    oled_write_P(PSTR("0"), false);
                     break;
                 case 1:
-                    oled_write_P(PSTR("Active Layer 1"), false);
+                    oled_write_P(PSTR("1"), false);
                     break;
                 case 2:
-                    oled_write_P(PSTR("Active Layer 2"), false);
+                    oled_write_P(PSTR("2"), false);
                     break;
                 case 3:
-                    oled_write_P(PSTR("Active Layer 3"), false);
+                    oled_write_P(PSTR("3"), false);
                     break;
                 default:
-                    oled_write_P(PSTR("Active Layer ?"), false);    // Should never display, here as a catchall                
+                    oled_write_P(PSTR("?"), false);    // Should never display, here as a catchall                
         }
-        // Display mode on OLED based on magic MAGIC_TOGGLE_ALT_GUI
+        // Display mode on OLED based on magic MAGIC_TOGGLE_ALT_GUI for MAC
         oled_set_cursor(0,1);
             if (keymap_config.swap_ralt_rgui) {
-              oled_write_P(PSTR("MacOS Mode  "), false);
+                oled_write_P(PSTR("MAC Mode"), false);
             } else {
-              oled_write_P(PSTR("Windows Mode"), false);
+                oled_write_P(PSTR("PC Mode "), false);
             }
         // Dispplay caps/num/scroll lock on OLED
         led_t led_state = host_keyboard_led_state();
@@ -151,5 +152,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         oled_set_cursor(3,2);
         oled_write(" WPM", false);
     }
-
 #endif
