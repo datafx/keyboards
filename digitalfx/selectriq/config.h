@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Vorror
+Copyright 2021 datafx
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,11 +20,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0x4B42
-#define PRODUCT_ID      0x6067
-#define DEVICE_VER      0x0002
-#define MANUFACTURER    KBDFans
-#define PRODUCT         KBD67v2
+#define VENDOR_ID       0x4658 // FX for digitalfx
+#define PRODUCT_ID      0x7371 // SQ for selectriq
+#define DEVICE_VER      0x0001
+#define MANUFACTURER    digitalfx
+#define PRODUCT         selectriq
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DIODE_DIRECTION COL2ROW
 
 /* number of backlight levels */
-#define BACKLIGHT_PIN B5
+//#define BACKLIGHT_PIN B5 //disabled for solenoid control
 #ifdef BACKLIGHT_PIN
 #define BACKLIGHT_LEVELS 3
 #endif
