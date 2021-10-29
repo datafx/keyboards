@@ -22,37 +22,38 @@ void matrix_init_kb(void) {
 }
 
 static uint16_t key_timer;
-static uint16_t ding_timer;
 
 bool click_enabled = true;  //click enable
 bool ding_enabled = true;  //ding enabled
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {   
-    if (click_enabled && record->event.pressed) {  //if any key pressed,
+  switch (keycode) {
+    case BL_TOGG:
+      if (record->event.pressed) { 
+        click_enabled = !click_enabled; //if BL_TOGG key pressed, turn off the click solenoid
+        ding_enabled = !ding_enabled; //if BL_Togg key pressed, turn off the ding solenoid
+      }
+      return false;  
+    case KC_ENTER:
+      if (ding_enabled && record->event.pressed) {  //if enter key pressed,
+        writePinHigh(D4);                          //activate ding solenoid
+        key_timer = timer_read();
+      }
+      return true;
+    default:
+      if (click_enabled && record->event.pressed) {  //if any key pressed,
         writePinHigh(B5);                          //activate click solenoid
         key_timer = timer_read();
+      }
+      return true;
+            
     }
-
-    switch (keycode) {
-        case BL_TOGG:
-            if (record->event.pressed)
-                click_enabled = !click_enabled; //if BL_TOGG key pressed, turn off the click solenoid
-                ding_enabled = !ding_enabled; //if BL_Togg key pressed, turn off the ding solenoid
-            return false;
-        case KC_ENTER:
-            if (ding_enabled && record->event.pressed) {  //if enter key pressed,
-               writePinHigh(B5);                          //activate ding solenoid
-               key_timer = timer_read();
-               return true;
-            }
-    }
-    return true;
 }
  
 void matrix_scan_user(void) {
-    if (timer_elapsed(key_timer) > 15 && readPin(B5)) //15 delay for solenoid, stay around 10-30.
+    if (timer_elapsed(key_timer) > 15) {//15 delay for solenoid, stay around 10-30.
         writePinLow(B5);                            
-    if (timer_elapsed(ding_timer) > 15 && readPin(D4)) //15 delay for solenoid, stay around 10-30.
         writePinLow(D4);
+    }
 }
 
