@@ -1,6 +1,6 @@
 # modelm terminal
 
-![IBM Model M TERMINAL ANSI](https://i.imgur.com/DAE3W7g.jpg)
+![IBM Model M TERMINAL ANSI]
 
 This is a configuration for the QMK firmware for reversible conversion of an IBM's Model M terminal keyboard from stock, power-hungry controller, to a modern one, running the USB bus.  
 Configuration is build for the Atmel AT90USB1286 controller, which you can easily use on the Teensy 2.0++ board (produced by PJRC).  
