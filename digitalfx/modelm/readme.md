@@ -23,7 +23,9 @@ Rows: 1  2  3  4  5  6  7  8
 Pins: E7 B0 B1 B2 B3 B4 B5 B6  
 --------------------------------------------------------  
 Status LEDs: CapsLock +5V ScrollLock NumLock  
-Pins:        B6       5V  B5         B4  
+Pins:        F2       5V  F1         F0  
+
+The LED (D1) or it's resistor (R3) must be removed from the Teensy in order for pin D6 to function properly.
 ```  
 
 Please note that some versions of Model M have LED connected with a ribbon cable, and not with separate wires.  

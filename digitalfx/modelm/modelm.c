@@ -17,29 +17,29 @@
 
 void keyboard_pre_init_kb(void) {
   /* Setting status LEDs pins to output and +5V (off) */
-  setPinOutput(B4);
-  setPinOutput(B5);
-  setPinOutput(B6);
-  writePinHigh(B4);
-  writePinHigh(B5);
-  writePinHigh(B6);
+  setPinOutput(F0);
+  setPinOutput(F1);
+  setPinOutput(F2);
+  writePinHigh(F0);
+  writePinHigh(F1);
+  writePinHigh(F2);
 }
 
 void led_set_kb(uint8_t usb_led) {
   if (usb_led & (1<<USB_LED_NUM_LOCK)) {
-    writePinLow(B4);
+    writePinLow(F0);
   } else {
-    writePinHigh(B4);
+    writePinHigh(F0);
   }
   if (usb_led & (1<<USB_LED_CAPS_LOCK)) {
-    writePinLow(B6);
+    writePinLow(F2);
   } else {
-    writePinHigh(B6);
+    writePinHigh(F2);
   }
   if (usb_led & (1<<USB_LED_SCROLL_LOCK)) {
-    writePinLow(B5);
+    writePinLow(F1);
   } else {
-    writePinHigh(B5);
+    writePinHigh(F1);
   }
 
   led_set_user(usb_led);
