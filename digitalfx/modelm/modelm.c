@@ -15,32 +15,40 @@
  */
 #include "modelm.h"
 
-void keyboard_pre_init_kb(void) {
-  /* Setting status LEDs pins to output and +5V (off) */
-  setPinOutput(F0);
-  setPinOutput(F1);
-  setPinOutput(F2);
-  writePinHigh(F0);
-  writePinHigh(F1);
-  writePinHigh(F2);
+led_config_t g_led_config = { {
+  // Num Caps Scroll
+    {   0,  1,   2  }
+}, {
+    { 206,   0 }, { 215,  0}, { 224,   0 }
+}, {
+     1,1,1
+} };
+
+void suspend_power_down_kb(void) {
+    rgb_matrix_set_suspend_state(true);
+    suspend_power_down_user();
 }
 
-void led_set_kb(uint8_t usb_led) {
-  if (usb_led & (1<<USB_LED_NUM_LOCK)) {
-    writePinLow(F0);
-  } else {
-    writePinHigh(F0);
-  }
-  if (usb_led & (1<<USB_LED_CAPS_LOCK)) {
-    writePinLow(F2);
-  } else {
-    writePinHigh(F2);
-  }
-  if (usb_led & (1<<USB_LED_SCROLL_LOCK)) {
-    writePinLow(F1);
-  } else {
-    writePinHigh(F1);
-  }
+void suspend_wakeup_init_kb(void) {
+    rgb_matrix_set_suspend_state(false);
+    suspend_wakeup_init_user();
+}
 
-  led_set_user(usb_led);
+void rgb_matrix_indicators_user(void) {
+    led_t host_leds = host_keyboard_led_state();
+    if (host_leds.caps_lock) {
+        rgb_matrix_set_color(1, 0x20, 0x00, 0x00);
+    } else {
+//        rgb_matrix_set_color(1, 0x00, 0x00, 0x00);
+    }
+    if (host_leds.num_lock) {
+        rgb_matrix_set_color(0, 0x20, 0x00, 0x00);
+    } else {
+//        rgb_matrix_set_color(0, 0x00, 0x00, 0x00);
+    }
+    if (host_leds.scroll_lock) {
+        rgb_matrix_set_color(2, 0x20, 0x00, 0x00);
+    } else {
+//        rgb_matrix_set_color(2, 0x00, 0x00, 0x00);
+    }
 }

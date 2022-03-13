@@ -30,6 +30,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS 8
 #define MATRIX_COLS 16
 
+#define AUDIO_PIN B7
+#define AUDIO_CLICKY
+
+#define RGB_DI_PIN D0
+#define DRIVER_LED_TOTAL 3
+#define RGB_DISABLE_WHEN_USB_SUSPENDED true
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 100 // limits maximum brightness of LEDs to 100 out of 255.
+#define RGBLIGHT_LIMIT_VAL 200 // limits maximum brightness of LEDs to 100 out of 255.
+#define RGB_MATRIX_KEYPRESSES
+#define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+
+#define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
+#define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
+#define ENABLE_RGB_MATRIX_BREATHING
+#define ENABLE_RGB_MATRIX_CYCLE_ALL
+#define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
+#define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
+#define ENABLE_RGB_MATRIX_PIXEL_FRACTAL
+
 /*
  * Keyboard Matrix Assignments
  *

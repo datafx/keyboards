@@ -2,11 +2,8 @@
     "name": "digitalfx Model M",
     "vendorId": "0x4658",
     "productId": "0x4D4D",
-    "lighting": "none",
-    "matrix": {
-        "rows": 8,
-        "cols": 16
-    },
+    "lighting": "vialrgb",
+    "matrix": { "rows": 8, "cols": 16 },
     "layouts": {
         "keymap": [
             [

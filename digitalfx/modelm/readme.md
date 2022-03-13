@@ -22,8 +22,8 @@ Pins:    C7 C6 C5 C4 C3 C2 C1 C0 E1 E0 D7 D6 D5 D4 D3 D2
 Rows: 1  2  3  4  5  6  7  8  
 Pins: E7 B0 B1 B2 B3 B4 B5 B6  
 --------------------------------------------------------  
-Status LEDs: CapsLock +5V ScrollLock NumLock  
-Pins:        F2       5V  F1         F0  
+
+Status LEDs are configured with RGB Matrix effects and override current effect.
 
 The LED (D1) or it's resistor (R3) must be removed from the Teensy in order for pin D6 to function properly.
 ```  
